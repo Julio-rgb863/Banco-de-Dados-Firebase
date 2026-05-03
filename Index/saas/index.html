@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nimbus — Plataforma SaaS moderna para gestão e analytics." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta property="og:title" content="Nimbus · Entrar" />
+  <meta property="og:description" content="Acesse sua conta Nimbus." />
+  <meta property="og:type" content="website" />
+  <title>Nimbus · Entrar</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --font:        'Geist', system-ui, sans-serif;
+      --mono:        'Geist Mono', monospace;
+
+      /* Dark (default) */
+      --bg-base:     #09090e;
+      --bg-surface:  #111117;
+      --bg-raised:   #18181f;
+      --bg-hover:    #1e1e28;
+      --border:      rgba(255,255,255,0.07);
+      --border-md:   rgba(255,255,255,0.12);
+      --border-strong: rgba(255,255,255,0.18);
+
+      --text-primary:   #eeeef2;
+      --text-secondary: #8a8aa0;
+      --text-muted:     #52526a;
+
+      --accent:      #6c63ff;
+      --accent-hover:#5548e0;
+      --accent-glow: rgba(108,99,255,0.22);
+      --green:       #22c55e;
+      --red:         #ef4444;
+      --amber:       #f59e0b;
+      --blue:        #3b82f6;
+
+      --r-sm:  8px;
+      --r-md:  12px;
+      --r-lg:  16px;
+      --r-xl:  20px;
+
+      --shadow-card: 0 0 0 1px var(--border), 0 8px 32px rgba(0,0,0,0.5);
+      --shadow-btn:  0 2px 8px rgba(108,99,255,0.35);
+
+      --ease: cubic-bezier(0.4,0,0.2,1);
+      --dur: 180ms;
+    }
+
+    [data-theme="light"] {
+      --bg-base:     #f4f4f9;
+      --bg-surface:  #ffffff;
+      --bg-raised:   #f0f0f7;
+      --bg-hover:    #e8e8f2;
+      --border:      rgba(0,0,0,0.07);
+      --border-md:   rgba(0,0,0,0.12);
+      --border-strong: rgba(0,0,0,0.2);
+      --text-primary:   #0f0f18;
+      --text-secondary: #55556e;
+      --text-muted:     #9999b8;
+      --shadow-card: 0 0 0 1px var(--border), 0 8px 32px rgba(0,0,0,0.08);
+    }
+
+    /* ============================================================
+       RESET + BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+       BACKGROUND ORBS
+    ============================================================ */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orb-drift 12s ease-in-out infinite alternate;
+    }
+    .bg-orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(108,99,255,0.14) 0%, transparent 70%);
+      top: -150px; left: -100px;
+      animation-duration: 14s;
+    }
+    .bg-orb-2 {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(236,72,153,0.09) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+      animation-duration: 10s;
+      animation-delay: -4s;
+    }
+    .bg-orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(59,130,246,0.07) 0%, transparent 70%);
+      bottom: 30%; right: 20%;
+      animation-duration: 18s;
+    }
+    @keyframes orb-drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, -20px) scale(1.06); }
+    }
+
+    /* ============================================================
+       CARD
+    ============================================================ */
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--r-xl);
+      padding: 36px 32px 32px;
+      box-shadow: var(--shadow-card);
+      /* subtle grid pattern */
+      background-image:
+        linear-gradient(var(--bg-surface), var(--bg-surface)),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 40px,
+          var(--border) 40px,
+          var(--border) 41px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 40px,
+          var(--border) 40px,
+          var(--border) 41px
+        );
+      background-clip: padding-box;
+    }
+    @media (max-width: 480px) {
+      body { align-items: flex-start; padding: 16px; }
+      .card { padding: 28px 20px 24px; border-radius: var(--r-lg); margin-top: 40px; }
+    }
+
+    /* ============================================================
+       LOGO
+    ============================================================ */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff;
+      box-shadow: 0 0 0 3px var(--accent-glow);
+      flex-shrink: 0;
+    }
+    .logo-name {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+    .logo-version {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent);
+      background: rgba(108,99,255,0.1);
+      border: 1px solid rgba(108,99,255,0.2);
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================================
+       TABS
+    ============================================================ */
+    .tabs {
+      display: flex;
+      gap: 0;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 3px;
+      margin-bottom: 24px;
+    }
+    .tab {
+      flex: 1;
+      padding: 8px 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all var(--dur) var(--ease);
+    }
+    .tab:hover { color: var(--text-primary); }
+    .tab.is-active {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    }
+
+    /* ============================================================
+       FORM
+    ============================================================ */
+    .form-title { font-size: 20px; font-weight: 600; letter-spacing: -0.04em; margin-bottom: 4px; }
+    .form-sub { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 22px; }
+
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+    .input {
+      width: 100%;
+      height: 42px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-md);
+      border-radius: var(--r-sm);
+      padding: 0 13px;
+      font-size: 14px;
+      color: var(--text-primary);
+      font-family: var(--font);
+      transition: all var(--dur) var(--ease);
+      outline: none;
+    }
+    .input::placeholder { color: var(--text-muted); }
+    .input:hover { border-color: var(--border-strong); }
+    .input:focus {
+      border-color: var(--accent);
+      background: var(--bg-raised);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 44px;
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      border: none;
+      transition: all var(--dur) var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; }
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background var(--dur) var(--ease);
+    }
+    .btn:not(:disabled):hover::after { background: rgba(255,255,255,0.05); }
+    .btn:not(:disabled):active { transform: scale(0.985); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: var(--shadow-btn);
+    }
+    .btn-primary:not(:disabled):hover { background: var(--accent-hover); }
+
+    .btn-social {
+      background: var(--bg-raised);
+      color: var(--text-primary);
+      border: 1px solid var(--border-md);
+      height: 42px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .btn-social:not(:disabled):hover { background: var(--bg-hover); border-color: var(--border-strong); }
+
+    .btn-label { display: inline-flex; align-items: center; gap: 8px; }
+    .btn-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-top-color: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ============================================================
+       DIVIDER
+    ============================================================ */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ============================================================
+       ERROR
+    ============================================================ */
+    .error-box {
+      background: rgba(239,68,68,0.07);
+      border: 1px solid rgba(239,68,68,0.22);
+      border-radius: var(--r-sm);
+      padding: 10px 13px;
+      font-size: 13px;
+      color: var(--red);
+      margin-top: 10px;
+      display: none;
+    }
+    .error-box.is-visible { display: block; }
+
+    /* ============================================================
+       TOAST HOST (from toast.js)
+    ============================================================ */
+    .toast-host {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 16px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-md);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-primary);
+      min-width: 240px;
+      max-width: 340px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      opacity: 0;
+      transform: translateX(12px);
+      transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+      pointer-events: none;
+    }
+    .toast.is-visible { opacity: 1; transform: translateX(0); }
+    .toast--success { border-left: 3px solid var(--green); }
+    .toast--error   { border-left: 3px solid var(--red); }
+    .toast-icon { font-size: 13px; flex-shrink: 0; }
+
+    /* ============================================================
+       PAGE LOADER
+    ============================================================ */
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 250ms var(--ease);
+    }
+    #page-loader.is-visible { opacity: 1; pointer-events: all; }
+    .loader-ring {
+      width: 32px; height: 32px;
+      border: 2px solid var(--border-md);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .card-footer {
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+    .card-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity var(--dur) var(--ease);
+    }
+    .card-footer a:hover { opacity: 0.75; }
+  </style>
+</head>
+<body data-page="login">
+
+  <!-- Background -->
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-3" aria-hidden="true"></div>
+
+  <!-- Page Loader -->
+  <div id="page-loader" role="status" aria-label="Carregando…">
+    <div class="loader-ring"></div>
+  </div>
+
+  <main class="card">
+    <!-- Logo -->
+    <div class="logo">
+      <div class="logo-mark" aria-hidden="true">N</div>
+      <span class="logo-name">Nimbus</span>
+      <span class="logo-version">BETA</span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+      <button id="tab-login" class="tab" role="tab" aria-selected="true" aria-controls="form-login">Entrar</button>
+      <button id="tab-register" class="tab" role="tab" aria-selected="false" aria-controls="form-register">Criar conta</button>
+    </div>
+
+    <!-- Social Buttons (shared) -->
+    <button id="btn-google" class="btn btn-social" type="button" aria-label="Entrar com Google">
+      <span class="btn-label">
+        <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Continuar com Google
+      </span>
+      <span class="btn-spinner" hidden aria-hidden="true"></span>
+    </button>
+    <button id="btn-github" class="btn btn-social" type="button" aria-label="Entrar com GitHub">
+      <span class="btn-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        Continuar com GitHub
+      </span>
+      <span class="btn-spinner" hidden aria-hidden="true"></span>
+    </button>
+
+    <div class="divider">ou continue com e-mail</div>
+
+    <!-- Login Form -->
+    <form id="form-login" role="tabpanel" aria-labelledby="tab-login" novalidate>
+      <p class="form-title">Bem-vindo de volta</p>
+      <p class="form-sub">Acesse sua conta para continuar</p>
+
+      <div class="field">
+        <label for="email-login">E-mail</label>
+        <input id="email-login" class="input" type="email" autocomplete="email" placeholder="seu@email.com" required />
+      </div>
+      <div class="field">
+        <label for="senha-login">Senha</label>
+        <input id="senha-login" class="input" type="password" autocomplete="current-password" placeholder="••••••••" required />
+      </div>
+      <p id="error-login" class="error-box" role="alert"></p>
+      <button id="btn-login" class="btn btn-primary" type="submit" style="margin-top:14px">
+        <span class="btn-label">Entrar na conta</span>
+        <span class="btn-spinner" hidden aria-hidden="true"></span>
+      </button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="form-register" role="tabpanel" aria-labelledby="tab-register" hidden novalidate>
+      <p class="form-title">Criar conta</p>
+      <p class="form-sub">Preencha seus dados para começar</p>
+
+      <div class="field">
+        <label for="email-register">E-mail</label>
+        <input id="email-register" class="input" type="email" autocomplete="email" placeholder="seu@email.com" required />
+      </div>
+      <div class="field">
+        <label for="senha-register">Senha</label>
+        <input id="senha-register" class="input" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" required />
+      </div>
+      <p id="error-register" class="error-box" role="alert"></p>
+      <button id="btn-register" class="btn btn-primary" type="submit" style="margin-top:14px">
+        <span class="btn-label">Criar conta grátis</span>
+        <span class="btn-spinner" hidden aria-hidden="true"></span>
+      </button>
+    </form>
+
+    <p class="card-footer">
+      Ao entrar você concorda com os
+      <a href="#" onclick="return false">Termos de Uso</a> e a
+      <a href="#" onclick="return false">Política de Privacidade</a>.
+    </p>
+  </main>
+
+  <script type="module">
+    import { initThemeFromStorage } from "./src/core/theme.js";
+    import { showToast } from "./src/core/toast.js";
+    import {
+      mapAuthError,
+      registerWithEmail,
+      signInWithEmail,
+      signInWithGithub,
+      signInWithGoogle,
+      watchAuth
+    } from "./src/core/auth.js";
+
+    initThemeFromStorage();
+
+    const els = {
+      tabLogin:    document.getElementById("tab-login"),
+      tabRegister: document.getElementById("tab-register"),
+      formLogin:   document.getElementById("form-login"),
+      formRegister:document.getElementById("form-register"),
+      emailLogin:  document.getElementById("email-login"),
+      senhaLogin:  document.getElementById("senha-login"),
+      errLogin:    document.getElementById("error-login"),
+      btnLogin:    document.getElementById("btn-login"),
+      emailReg:    document.getElementById("email-register"),
+      senhaReg:    document.getElementById("senha-register"),
+      errReg:      document.getElementById("error-register"),
+      btnRegister: document.getElementById("btn-register"),
+      btnGoogle:   document.getElementById("btn-google"),
+      btnGithub:   document.getElementById("btn-github"),
+      pageLoader:  document.getElementById("page-loader"),
+    };
+
+    let mode = "login";
+
+    function setMode(next) {
+      mode = next;
+      const isLogin = mode === "login";
+      els.tabLogin.classList.toggle("is-active", isLogin);
+      els.tabRegister.classList.toggle("is-active", !isLogin);
+      els.tabLogin.setAttribute("aria-selected", isLogin ? "true" : "false");
+      els.tabRegister.setAttribute("aria-selected", !isLogin ? "true" : "false");
+      els.formLogin.hidden = !isLogin;
+      els.formRegister.hidden = isLogin;
+      els.errLogin.textContent = "";
+      els.errReg.textContent = "";
+    }
+
+    function setLoading(btn, loading) {
+      const label = btn.querySelector(".btn-label");
+      const spin  = btn.querySelector(".btn-spinner");
+      btn.disabled = loading;
+      if (label) label.hidden = loading;
+      if (spin)  spin.hidden  = !loading;
+    }
+
+    function showError(el, msg) {
+      el.textContent = msg;
+      el.classList.add("is-visible");
+    }
+
+    function clearError(el) {
+      el.textContent = "";
+      el.classList.remove("is-visible");
+    }
+
+    function loader(v) {
+      els.pageLoader.classList.toggle("is-visible", v);
+    }
+
+    // Redirect if already logged in
+    watchAuth((user) => {
+      if (user) { loader(true); location.replace("dashboard.html"); }
+    });
+
+    els.tabLogin.addEventListener("click", () => setMode("login"));
+    els.tabRegister.addEventListener("click", () => setMode("register"));
+
+    els.formLogin.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearError(els.errLogin);
+      setLoading(els.btnLogin, true);
+      try {
+        await signInWithEmail(els.emailLogin.value.trim(), els.senhaLogin.value);
+        loader(true);
+        location.href = "dashboard.html";
+      } catch (err) {
+        showError(els.errLogin, mapAuthError(err));
+        showToast(mapAuthError(err), "error");
+      } finally {
+        setLoading(els.btnLogin, false);
+      }
+    });
+
+    els.formRegister.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearError(els.errReg);
+      setLoading(els.btnRegister, true);
+      try {
+        await registerWithEmail(els.emailReg.value.trim(), els.senhaReg.value);
+        showToast("Conta criada com sucesso! Redirecionando…", "success");
+        loader(true);
+        location.href = "dashboard.html";
+      } catch (err) {
+        showError(els.errReg, mapAuthError(err));
+        showToast(mapAuthError(err), "error");
+      } finally {
+        setLoading(els.btnRegister, false);
+      }
+    });
+
+    async function socialLogin(fn) {
+      setLoading(els.btnGoogle, true);
+      setLoading(els.btnGithub, true);
+      try {
+        await fn();
+        loader(true);
+        location.href = "dashboard.html";
+      } catch (err) {
+        showToast(mapAuthError(err), "error");
+      } finally {
+        setLoading(els.btnGoogle, false);
+        setLoading(els.btnGithub, false);
+      }
+    }
+
+    els.btnGoogle.addEventListener("click", () => socialLogin(signInWithGoogle));
+    els.btnGithub.addEventListener("click", () => socialLogin(signInWithGithub));
+
+    // Clear errors on input
+    ["email-login","senha-login"].forEach(id =>
+      document.getElementById(id)?.addEventListener("input", () => clearError(els.errLogin))
+    );
+    ["email-register","senha-register"].forEach(id =>
+      document.getElementById(id)?.addEventListener("input", () => clearError(els.errReg))
+    );
+
+    setMode("login");
+  </script>
+</body>
+</html>
